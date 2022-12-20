@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>리액트 기본</title>
+	</head>
+	<body>
+		<div id="root"></div>
+		<div id="root2"></div>
+		<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+		<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+		<script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+		<script type="text/babel">
+			'use strict';
+			// class 방식 => ErrorBoundary 에서 쓰임. 99% 안쓰임
+			// class LikeButton extends React.Component {}
+			// 화살표 함수 방식
+			// const LikeButton = () => {};
+			// 일반 함수 방식
+			// function LikeButton () {};
+
+			// react 17버전 예시
+			class LikeButton extends React.Component {
+				constructor(props) {
+					super(props);
+					this.state = {liked: false};
+				}
+				render() {
+					if (this.state.liked) {
+						return 'You liked this';
+					}
+					// return React.createElement('button', {
+					// 	onClick: () => {
+					// 		this.setState({liked: true})
+					// 	}
+					// }, 'Like');
+					return (
+						// return 안에는 fragment 또는 하나의 root tag로 감싸야 함.
+						<button onClick={
+							() => this.setState({liked:true})
+							// this.state.liked = true; 객체를 함부로 바꿀 수 없음 (불변성)
+						}>
+							{this.state.liked ? 'Like' : 'Dislike'}
+						</button>
+					);
+				}
+			}
+		</script>
+		<script type="text/babel">
+			// ReactDOM.render(React.createElement(LikeButton), document.querySelector('#root'));
+			// ReactDOM.render(<LikeButton />, document.querySelector('#root')); // react 17 version
+			// =>
+			ReactDOM.createRoot(document.querySelector('#root')).render(
+				<div>	
+					<LikeButton />
+					<LikeButton />
+				</div>
+			); // react 18 version
+		</script>
+		<script type="text/babel">
+			'use strict';
+
+			function LikeButton2() { // 함수 컴포넌트
+				const [liked, setLiked] = React.useState(false);
+
+				if(liked) {
+					return 'You liked this 2'
+				}
+				return (
+					<button onClick={() => { setLiked(true); }}>Like</button>
+				);
+			}
+		</script>
+		<script type="text/babel">
+			ReactDOM.createRoot(document.querySelector('#root2')).render(<LikeButton2 />);
+		</script>
+	</body>
+</html>

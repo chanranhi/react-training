@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>리액트 구구단-17V</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+		<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="text/babel">
+			'use strict';
+
+      class GuGuDan extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            first: Math.ceil(Math.random() * 9),
+            second: Math.ceil(Math.random() * 9),
+            value: '',
+            result: '',
+          }
+        };
+
+        onSubmit = (e) => {
+          // this bind 문제로 화살표 함수 사용
+          e.preventDefault();
+          const isCorrect = parseInt(this.state.value) === this.state.first * this.state.second
+          if (isCorrect) {
+             // setState는 비동기여서, 예전값으로 state 만들때는 함수로 리턴받기
+            this.setState((prevState) => {
+              return {
+                result: '정답:' + prevState.value,
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: '',
+              };
+            });
+            // this.setState({
+            //   result: '정답',
+            //   first: Math.ceil(Math.random() * 9),
+            //   second: Math.ceil(Math.random() * 9),
+            //   value: '',
+            // });
+            this.input.focus();
+          } else {
+            this.setState({
+              result: '땡',
+              value: '',
+            });
+            this.input.focus();
+          }
+        };
+
+        onChange = (e) => {
+          this.setState({ value: e.target.value });
+        };
+
+        input;
+        render() {
+          console.log('렌더링; setState를 하면 렌더링 다시 함.\n 함수를 render 내부 말고 바깥으로 빼서 렌더 할때마다 생성 안하게끔 함');
+          return (
+            <React.Fragment>
+              <div>{this.state.first} 곱하기 {this.state.second}</div>
+              <form onSubmit={this.onSubmit}>
+                <input
+                  type="number"
+                  ref={(c) => { this.input = c; }}
+                  value={this.state.value}
+                  onChange={this.onChange}
+                />
+                <button>입력</button>
+              </form>
+              <div>{this.state.result}</div>
+            </React.Fragment>
+          );
+        };
+      };
+		</script>
+		<script type="text/babel">
+      ReactDOM.createRoot(document.querySelector('#root')).render(
+        <>
+          <GuGuDan />
+          <GuGuDan />
+          <GuGuDan />
+        </>
+      ); // GuGuDan이 각각의 state를 가짐
+		</script>
+	</body>
+</html>
