@@ -17,16 +17,19 @@
         const [value, setValue] = React.useState('');
         const [result, setResult] = React.useState('');
 
+				const onSubmit = (e) => {
+					e.preventDefault();
+					if (parseInt(value) === first * second) {
+						setResult('정답');
+					} else {
+						setResult('땡');
+					}
+				}
+
         return (
           <div>
             <div>{first} 곱하기 {second}</div>
-            <form onSubmit={(e) => {
-							if (value === first * second) {
-								setResult('정답');
-							} else {
-								setResult('땡');
-							}
-						}}>
+            <form onSubmit={onSubmit}>
               <input
                 type="number"
                 value={value}
