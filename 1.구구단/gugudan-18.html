@@ -10,7 +10,7 @@
 		<div id="root"></div>
 		<script type="text/babel">
 			'use strict';
-      
+
 			const GuGuDan = () => {
         const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
         const [second, setSecond] = React.useState(Math.ceil(Math.random() * 9));
@@ -20,7 +20,13 @@
         return (
           <div>
             <div>{first} 곱하기 {second}</div>
-            <form onSubmit={(e) => {}}>
+            <form onSubmit={(e) => {
+							if (value === first * second) {
+								setResult('정답');
+							} else {
+								setResult('땡');
+							}
+						}}>
               <input
                 type="number"
                 value={value}
@@ -36,7 +42,7 @@
 		<script type="text/babel">
       ReactDOM.createRoot(document.querySelector('#root')).render(
         <React.Fragment>
-          <GuGuDan /> 
+          <GuGuDan />
           <GuGuDan />
           <GuGuDan />
         </React.Fragment>
