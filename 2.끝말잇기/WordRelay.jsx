@@ -2,14 +2,14 @@ const React = require("react");
 const { useState, useRef } = React;
 
 const WordRelay = () => {
-  const [word, setWord] = React.useState('');
-  const [value, setValue] = React.useState('');
-  const [result, setResult] = React.useState('');
-  const inputRef = React.useRef(null);
+  const [word, setWord] =useState('제로초');
+  const [value, setValue] = useState('');
+  const [result, setResult] = useState('');
+  const inputRef = useRef(null);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    if(word[this.state.word.length - 1] === value[0]) {
+    if(word[word.length - 1] === value[0]) {
       setWord(value);
       setResult('딩동댕');
       setValue('');
@@ -21,13 +21,15 @@ const WordRelay = () => {
       inputRef.current.focus();
     }
   }
+  // uncontrolled vs controlled
+  // https://goshacmd.com/controlled-vs-uncontrolled-inputs-react/
 
   const onChangeInput = (e) => {
-    this.setState({ value: e.target.value });
+    setValue(e.target.value);
   }
 
   const onRefInput = (c) => {
-    this.input = c;
+    inputRef.current = c;
   }
 
   return (
