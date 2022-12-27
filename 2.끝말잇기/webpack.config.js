@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require('webpack')
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
   name: 'config name',
@@ -31,20 +32,28 @@ module.exports = {
           }],
           '@babel/preset-react'
         ],
-        plugins: [],
+        plugins: [
+          'react-refresh/babel'
+        ],
       }
     }]
   },
 
   plugins: [
-    new webpack.LoaderOptionsPlugin({debug: true})
+    //new webpack.LoaderOptionsPlugin({debug: true})
+    new RefreshWebpackPlugin()
   ],
 
   // 출력
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'app.js'
+    path: path.join(__dirname, 'dist'), // 실제 경로
+    filename: 'app.js',
+    publicPath: '/dist/', // 가상 경로
+  },
+
+  devServer: {
+    devMiddleware: { publicPath: '/dist/' }, // 생성하는 경로
+    static: { directory: path.resolve(__dirname) }, // 실제 존재 파일
+    hot: true
   }
-
-
 }
