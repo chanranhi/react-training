@@ -16,21 +16,29 @@
       const [second, setSecond] = React.useState(Math.ceil(Math.random() * 9));
       const [value, setValue] = React.useState('');
       const [result, setResult] = React.useState('');
+      let input = null;
 
       const onSubmit = (e) => {
         e.preventDefault();
         if (parseInt(value) === first * second) {
           setResult('정답');
+          setFirst(Math.ceil(Math.random() * 9));
+          setSecond(Math.ceil(Math.random() * 9));
+          input.focus();
         } else {
           setResult('땡');
+          input.focus();
         }
       }
+
+      const onRefInput = (c) => {input = c;}
 
       return (
         <div>
           <div>{first} 곱하기 {second}</div>
           <form onSubmit={onSubmit}>
             <input
+              ref={onRefInput}
               type="number"
               value={value}
               onChange={(e) => {setValue(e.target.value);}}
