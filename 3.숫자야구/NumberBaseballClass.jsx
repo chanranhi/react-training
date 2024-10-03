@@ -16,17 +16,17 @@ class NumberBaseball extends Component {
     result: '',
     value: '',
     answer: getNumbers(), // ex: [1,3,5,7]
-    tries: [], // push 쓰면 안 돼요
+    tries: [], // state에는 push 쓰면 안 돼요 -> 불변성을 지켜주지 않아 리액트가 뭐가 바뀌었는지 감지하지 못함, 리렌더링이 안됌
   };
 
   onSubmitForm = (e) => {
-    const { value, tries, answer } = this.state;
     e.preventDefault();
+    const { value, tries, answer } = this.state;
     if (value === answer.join('')) {
       this.setState((prevState) => {
         return {
           result: '홈런!',
-          tries: [...prevState.tries, { try: value, result: '홈런!' }],
+          tries: [...prevState.tries, { try: value, result: '홈런!' }], // 리렌더링을 위해 기존값을 포함하여 새로운 배열을 할당
         }
       });
       alert('게임을 다시 시작합니다!');
@@ -100,4 +100,14 @@ class NumberBaseball extends Component {
   }
 }
 
-export default NumberBaseball; // import NumberBaseball;
+export default NumberBaseball; // import NumberBaseball; (ES6 문법)
+
+/** CommonJS(node) 문법
+ * const React = require('react');
+ * exports.hello = 'hello'; // => module.exports = { hello: 'hello' }
+ * module.exports = NumberBaseball;
+ */
+
+// node로 webpack을 돌려서 webpack에서는 CommonJS 문법만 사용가능
+// 하지만 바벨이 import 등 ES6문법을 CommonJS 문법으로 변경해줌
+// => webpack.config.js에서는 CommonJS 문법을 사용해야함
