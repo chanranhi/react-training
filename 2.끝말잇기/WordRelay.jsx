@@ -23,6 +23,7 @@ const WordRelay = () => {
   }
   // uncontrolled vs controlled
   // https://goshacmd.com/controlled-vs-uncontrolled-inputs-react/
+  // https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components
 
   const onChangeInput = (e) => {
     setValue(e.target.value);
@@ -38,6 +39,8 @@ const WordRelay = () => {
       <form onSubmit={onSubmitForm}>
         <label htmlFor="wordInput">글자를 입력하세요.</label>
         <input id="wordInput" ref={onRefInput} value={value} onChange={onChangeInput} />
+        {/* react에서는 for -> htmlFor, class -> className 으로 사용함 */}
+        {/* uncontrolled input과 controlled input 중 controlled에서는 html의 value 기본값을 defaultValue로 사용해야함 */}
         <button className="wordBtn">입력</button>
       </form>
       <div>{result}</div>
